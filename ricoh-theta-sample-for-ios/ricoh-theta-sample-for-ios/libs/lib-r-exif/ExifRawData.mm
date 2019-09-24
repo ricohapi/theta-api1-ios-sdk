@@ -269,7 +269,10 @@
                 
             case IFDType_SRATIONAL:
             {
-                long v1, v2;
+                // 64bit processor, after iphone 5s, is modify long size from 4byte to 8byte
+                // in this case, ntohl is not work correctly like 32bit processor.
+                //long v1, v2;
+                int v1 = 0, v2 = 0;
                 memcpy(&v1, buf+i*unitLength, unitLength/2);
                 memcpy(&v2, buf+i*unitLength+unitLength/2, unitLength/2);
                 if (_bigendian) {

@@ -1,7 +1,7 @@
 ==================================================
  README for "RICOH THETA SDK for iOS"
 
- Version :0.2.1
+ Version :0.3.0
 ==================================================
 
 This file is an explanation document for RICOH THETA SDK for iOS.
@@ -37,7 +37,10 @@ However, this document assumes that you have already registered as an iOS develo
     README_ja.txt: This file (Japanese)
     LICENSE.txt: Terms of service file (English)
     LICENSE_ja.txt: Terms of service file (Japanese)
-    ricoh-theta-sample-for-ios: Sample app
+    ricoh-theta-sample-for-ios
+    ┣ ricoh-theta-sample-for-ios: Sample application source
+    ┣ ricoh-theta-sample-for-ios.xcodeproj: Sample application object
+    ┗ doc: Documents related to the sample application
     lib
     ┣ lib-ricoh-theta: Library about operations of RICOH THETA
     ┣ lib-r-exif: Library that enables acquisition of EXIF information from spherical images shot using RICOH THETA.
@@ -80,6 +83,7 @@ However, this document assumes that you have already registered as an iOS develo
     [Using your own app with RICOH THETA SDK]
         1. Copy lib-ricoh-theta, lib-r-exif and lib-ricoh-theta_serializer into the lib of your app.
         2. Add framework and dylib. Requirements for using the library are written in the README files contained in each of the library folders.
+           When using OpenGL ES, add GLKit and OpenGLES framework as required.
         3. Mount based on the sample application and information described below.
 
     [More detailed information]
@@ -119,6 +123,7 @@ However, this document assumes that you have already registered as an iOS develo
 
 * Update History
 
+    02/20/2015 0.3.0 Spherical viewer function added to the sample app
     11/10/2014 0.2.1 Added missing import statement
     11/06/2014 0.2.0 Documents are translated
     10/28/2014 0.1.0 Initial release

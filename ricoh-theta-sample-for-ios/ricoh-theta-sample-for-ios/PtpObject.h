@@ -6,6 +6,9 @@
 #import <Foundation/Foundation.h>
 #import "PtpIpObjectInfo.h"
 
+/**
+ * Photo data abstraction class for list
+ */
 @interface PtpObject : NSObject
 
 @property (readonly) UIImage* thumbnail;

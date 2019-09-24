@@ -1,7 +1,7 @@
 ==================================================
  README for "RICOH THETA SDK for iOS"
 
- Version :0.2.1
+ Version :0.3.0
 ==================================================
 
 このファイルはRICOH THETA SDK for iOSに関する説明文書です。
@@ -33,16 +33,19 @@ ricoh-theta-sample-for-iosは上記のライブラリを利用したサンプル
 
 * アーカイブに含まれているファイルに関して
 
-    README.txt                           ：このファイルです(英語)
-    README_ja.txt                        ：このファイルです(日本語)
-    LICENSE.txt                          ：規約に関するファイルです(英語)
-    LICENSE_ja.txt                       ：規約に関するファイルです(日本語)
-    ricoh-theta-sample-for-ios           ：サンプルアプリケーションです
+    README.txt                           	：このファイルです(英語)
+    README_ja.txt                        	：このファイルです(日本語)
+    LICENSE.txt                          	：規約に関するファイルです(英語)
+    LICENSE_ja.txt                     		：規約に関するファイルです(日本語)
+    ricoh-theta-sample-for-ios
+    ┣ ricoh-theta-sample-for-ios       	：サンプルアプリケーションのソースです
+    ┣ ricoh-theta-sample-for-ios.xcodeproj	：サンプルアプリケーションのオブジェクトです
+    ┗ doc                           	    ：サンプルアプリケーション関するドキュメントです
     lib
-    ┣ lib-ricoh-theta                    ：RICOH THETAの操作に関するライブラリです
-    ┣ lib-r-exif                         ：RICOH THETAで撮影した全天球イメージのEXIF情報の取得ができるライブラリです
-    ┣ lib-ricoh-theta_serializer         ：lib-ricoh-thetaの利用を行いやすくしたライブラリです
-    ┗ doc                                ：ライブラリに関するドキュメントです
+    ┣ lib-ricoh-theta                  	：RICOH THETAの操作に関するライブラリです
+    ┣ lib-r-exif                       	：RICOH THETAで撮影した全天球イメージのEXIF情報の取得ができるライブラリです
+    ┣ lib-ricoh-theta_serializer      		：lib-ricoh-thetaの利用を行いやすくしたライブラリです
+    ┗ doc                              	：ライブラリに関するドキュメントです
 
 ----------------------------------------
 
@@ -80,6 +83,7 @@ ricoh-theta-sample-for-iosは上記のライブラリを利用したサンプル
     [ 自分のアプリケーションでRICOH THETA SDKを利用する場合 ]
         1. 自分のアプリケーションにlib内のlib-ricoh-theta、lib-r-exif、lib-ricoh-theta_serializerをコピーしてください
         2. frameworkとdylibを追加してください、ライブラリ利用時に必要なものはそれぞれのライブラリフォルダ内のREADMEに記載されています
+           OpenGL ESを使用する場合には必要に応じてGLKit、OpenGLES frameworkを追加してください
         3. サンプルアプリケーションや後述の情報をもとに実装をしてください
 
     [ より詳しい情報に関して ]
@@ -119,6 +123,7 @@ ricoh-theta-sample-for-iosは上記のライブラリを利用したサンプル
 
 * 更新履歴
 
+    2015/02/20 0.3.0 サンプルアプリに全天球ビューア機能を追加
     2014/11/10 0.2.1 import文の不足分追加
     2014/11/06 0.2.0 英語訳反映
     2014/10/28 0.1.0 初回リリース

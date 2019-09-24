@@ -53,6 +53,11 @@
 		22F963BC16D746860007DF95 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22F963BB16D746860007DF95 /* Default-568h@2x.png */; };
 		22F963BF16D746860007DF95 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22F963BD16D746860007DF95 /* MainStoryboard.storyboard */; };
 		22F963C216D746860007DF95 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F963C116D746860007DF95 /* ViewController.m */; };
+		3E437EF51A1B943D003FA39E /* glkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E437EF21A1B943D003FA39E /* glkViewController.m */; };
+		3E437EF61A1B943D003FA39E /* GLRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E437EF41A1B943D003FA39E /* GLRenderView.m */; };
+		3E437EFB1A1B9455003FA39E /* UVSphere.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E437EF91A1B9455003FA39E /* UVSphere.m */; };
+		3E437EFD1A1B9597003FA39E /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E437EFC1A1B9597003FA39E /* GLKit.framework */; };
+		3E437EFF1A1B95A6003FA39E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E437EFE1A1B95A6003FA39E /* OpenGLES.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -142,6 +147,15 @@
 		22F963BE16D746860007DF95 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		22F963C016D746860007DF95 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		22F963C116D746860007DF95 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		3E437EF01A1B9425003FA39E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		3E437EF11A1B943D003FA39E /* glkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glkViewController.h; sourceTree = "<group>"; };
+		3E437EF21A1B943D003FA39E /* glkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = glkViewController.m; sourceTree = "<group>"; };
+		3E437EF31A1B943D003FA39E /* GLRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLRenderView.h; sourceTree = "<group>"; };
+		3E437EF41A1B943D003FA39E /* GLRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLRenderView.m; sourceTree = "<group>"; };
+		3E437EF81A1B9455003FA39E /* UVSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVSphere.h; sourceTree = "<group>"; };
+		3E437EF91A1B9455003FA39E /* UVSphere.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVSphere.m; sourceTree = "<group>"; };
+		3E437EFC1A1B9597003FA39E /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		3E437EFE1A1B95A6003FA39E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +163,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E437EFF1A1B95A6003FA39E /* OpenGLES.framework in Frameworks */,
+				3E437EFD1A1B9597003FA39E /* GLKit.framework in Frameworks */,
 				2269A62616D74E6F00A1D342 /* libiconv.dylib in Frameworks */,
 				22CA6B4916DB32CC001EB1FF /* Accelerate.framework in Frameworks */,
 				22F963AA16D746850007DF95 /* CoreGraphics.framework in Frameworks */,
@@ -290,6 +306,8 @@
 		22F963A416D746850007DF95 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E437EFE1A1B95A6003FA39E /* OpenGLES.framework */,
+				3E437EFC1A1B9597003FA39E /* GLKit.framework */,
 				22CA6B4816DB32CC001EB1FF /* Accelerate.framework */,
 				22F963A916D746850007DF95 /* CoreGraphics.framework */,
 				2269A62316D74D9600A1D342 /* ImageIO.framework */,
@@ -302,18 +320,25 @@
 		22F963AB16D746850007DF95 /* ricoh-theta-sample-for-ios */ = {
 			isa = PBXGroup;
 			children = (
-				2269A5B616D74AB400A1D342 /* libs */,
 				22F963B416D746850007DF95 /* AppDelegate.h */,
 				22F963B516D746850007DF95 /* AppDelegate.m */,
+				3E437EF01A1B9425003FA39E /* Constants.h */,
+				3E437EF11A1B943D003FA39E /* glkViewController.h */,
+				3E437EF21A1B943D003FA39E /* glkViewController.m */,
+				3E437EF31A1B943D003FA39E /* GLRenderView.h */,
+				3E437EF41A1B943D003FA39E /* GLRenderView.m */,
+				22CA6B3E16DB011F001EB1FF /* ImageViewController.h */,
+				22CA6B3F16DB011F001EB1FF /* ImageViewController.m */,
 				22F963BD16D746860007DF95 /* MainStoryboard.storyboard */,
 				22CA6B3B16DAF889001EB1FF /* PtpObject.h */,
 				22CA6B3C16DAF889001EB1FF /* PtpObject.m */,
 				22CA6B4116DB0BDB001EB1FF /* TableCell.h */,
 				22CA6B4216DB0BDB001EB1FF /* TableCell.m */,
+				3E437EF81A1B9455003FA39E /* UVSphere.h */,
+				3E437EF91A1B9455003FA39E /* UVSphere.m */,
 				22F963C016D746860007DF95 /* ViewController.h */,
 				22F963C116D746860007DF95 /* ViewController.m */,
-				22CA6B3E16DB011F001EB1FF /* ImageViewController.h */,
-				22CA6B3F16DB011F001EB1FF /* ImageViewController.m */,
+				2269A5B616D74AB400A1D342 /* libs */,
 				22F963AC16D746850007DF95 /* Supporting Files */,
 			);
 			path = "ricoh-theta-sample-for-ios";
@@ -360,6 +385,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0460;
+				TargetAttributes = {
+					22F963A116D746850007DF95 = {
+						DevelopmentTeam = 5N37XT6436;
+					};
+				};
 			};
 			buildConfigurationList = 22F9639D16D746850007DF95 /* Build configuration list for PBXProject "ricoh-theta-sample-for-ios" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -401,6 +431,7 @@
 			files = (
 				010B33B619FE2746002D8526 /* PtpIpSession+dcf.mm in Sources */,
 				010B33A719FE2746002D8526 /* basictypes.cpp in Sources */,
+				3E437EF51A1B943D003FA39E /* glkViewController.m in Sources */,
 				010B33AA19FE2746002D8526 /* exceptions.cpp in Sources */,
 				010B33A119FE2746002D8526 /* ExifTags.m in Sources */,
 				22F963B216D746850007DF95 /* main.m in Sources */,
@@ -417,10 +448,12 @@
 				010B33BC19FE2746002D8526 /* PtpLogging.mm in Sources */,
 				010B33B219FE2746002D8526 /* PtpIpDevicePropDesc.mm in Sources */,
 				010B33A319FE2746002D8526 /* RicohEXIF.mm in Sources */,
+				3E437EF61A1B943D003FA39E /* GLRenderView.m in Sources */,
 				010B33B319FE2746002D8526 /* PtpIpInitiator.mm in Sources */,
 				010B33AC19FE2746002D8526 /* ptp_packets.cpp in Sources */,
 				22CA6B4016DB011F001EB1FF /* ImageViewController.m in Sources */,
 				010B33B919FE2746002D8526 /* variant.cpp in Sources */,
+				3E437EFB1A1B9455003FA39E /* UVSphere.m in Sources */,
 				010B33B519FE2746002D8526 /* PtpIpObjectInfo.mm in Sources */,
 				010B33A919FE2746002D8526 /* bytestream.cpp in Sources */,
 				010B33B019FE2746002D8526 /* ptpip_packets_impl.cpp in Sources */,
@@ -517,11 +550,14 @@
 		22F963C616D746860007DF95 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "$(SRCROOT)/ricoh-theta-sample-for-ios/ricoh-theta-sample-for-ios-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "ricoh-theta-sample-for-ios";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -529,11 +565,14 @@
 		22F963C716D746860007DF95 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "$(SRCROOT)/ricoh-theta-sample-for-ios/ricoh-theta-sample-for-ios-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "ricoh-theta-sample-for-ios";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

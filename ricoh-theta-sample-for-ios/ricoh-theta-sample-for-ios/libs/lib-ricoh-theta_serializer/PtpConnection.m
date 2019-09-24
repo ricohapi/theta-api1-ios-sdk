@@ -37,8 +37,8 @@
     [s appendFormat:@" requested %@", requested];
     [s appendFormat:@" NSOperation %@", [operation debugDescription]];
 #else
-    [s appendFormat:@", canceled ", [operation isCancelled]];
-    [s appendFormat:@", finished ", [operation isFinished]];
+    [s appendFormat:@", canceled %d", [operation isCancelled]];
+    [s appendFormat:@", finished %d", [operation isFinished]];
 #endif
     [s appendString:@">"];
     return s;

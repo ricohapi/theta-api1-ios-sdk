@@ -5,10 +5,23 @@
 #import "ImageViewController.h"
 #import "RicohEXIF.h"
 #import "ExifTags.h"
+#import "glkViewController.h"
+#import "GLRenderView.h"
 
 @interface ImageViewController ()
 {
     PtpObject* _ptpObject;
+    NSMutableData *_imageData;
+    int imageWidth;
+    int imageHeight;
+    GlkViewController *glkViewController;
+    float _yaw;
+    float _roll;
+    float _pitch;
+    UIView *_configView;
+    UIButton *_configButton1;
+    UIButton *_configButton2;
+    UIButton *_configButton3;
 }
 @end
 
@@ -25,6 +38,68 @@
 - (void)onCloseClicked:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)myCloseClicked:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)onConfig:(id)sender {
+}
+
+- (void)myConfig:(id)sender {
+    NSLog(@"myConfig");
+    _configView = [[UIView alloc] init];
+    _configView.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    _configView.frame = _imageView.frame;
+    [self.view addSubview:_configView];
+    
+    CGRect rect = _closeButton.frame;
+    _configButton1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _configButton1.frame = rect;
+    [_configButton1 setTitle:KSTR_NONE_INERTIA forState:UIControlStateNormal];
+    [_configButton1 addTarget:self action:@selector(noInertia:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_configButton1];
+
+    _configButton2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    rect.origin.y += KINT_HIGHT_INTERVAL_BUTTON;
+    _configButton2.frame = rect;
+    [_configButton2 setTitle:KSTR_SHORT_INERTIA forState:UIControlStateNormal];
+    [_configButton2 addTarget:self action:@selector(shortInertia:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_configButton2];
+    
+    _configButton3 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    rect.origin.y += KINT_HIGHT_INTERVAL_BUTTON;
+    _configButton3.frame = rect;
+    [_configButton3 setTitle:KSTR_LONG_INERTIA forState:UIControlStateNormal];
+    [_configButton3 addTarget:self action:@selector(longInertia:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_configButton3];
+}
+
+- (void)noInertia:(id)sender    {
+    NSLog(@"noInertia");
+    [glkViewController.glRenderView setInertia:NoneInertia];
+    [self deleteView];
+}
+
+- (void)shortInertia:(id)sender    {
+    NSLog(@"shortInertia");
+    [glkViewController.glRenderView setInertia:ShortInertia];
+    [self deleteView];
+}
+
+- (void)longInertia:(id)sender    {
+    NSLog(@"longInertia");
+    [glkViewController.glRenderView setInertia:LongInertia];
+    [self deleteView];
+}
+
+-(void)deleteView   {
+    [_configButton3 removeFromSuperview];
+    [_configButton2 removeFromSuperview];
+    [_configButton1 removeFromSuperview];
+    [_configView removeFromSuperview];
 }
 
 #pragma mark - PTP/IP Operation
@@ -45,9 +120,11 @@
         __block float total = 0.0;
         
         // Get primary image that was resized to 2048x1024.
+        imageWidth = 2048;
+        imageHeight = 1024;
         BOOL result = [session getResizedImageObject:objectHandle
-                                               width:2048
-                                              height:1024
+                                               width:imageWidth
+                                              height:imageHeight
                                          onStartData:^(NSUInteger totalLength) {
                                              // Callback before object-data reception.
                                              NSLog(@"getObject(0x%08x) will received %zd bytes.", objectHandle, totalLength);
@@ -72,8 +149,8 @@
             });
             return;
         }
-        UIImage* image = [UIImage imageWithData:imageData];
-        
+        _imageData = imageData;
+
         // Parse EXIF data, it contains the data to correct the tilt.
         RicohEXIF* exif = [[RicohEXIF alloc] initWithNSData:imageData];
         
@@ -83,11 +160,26 @@
                               exif.pitch,
                               exif.roll];
         
+        if (isnan(exif.yaw)) {
+            _yaw = 0.0f;
+        } else {
+            _yaw = exif.yaw;
+        }
+        if (isnan(exif.pitch)) {
+            _pitch = 0.0f;
+        } else {
+            _pitch = exif.pitch;
+        }
+        if (isnan(exif.roll)) {
+            _roll = 0.0f;
+        } else {
+            _roll = exif.roll;
+        }
+
         dispatch_async(dispatch_get_main_queue(), ^{
             _progressView.hidden = YES;
-            _imageView.image = image;
-            _imageView.alpha = 1.0;
             [self appendLog:tiltInfo];
+            [self startGLK];
         });
     }];
 }
@@ -108,22 +200,6 @@
     [super viewDidLoad];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    _progressView.hidden = YES;
-    if (_imageView.image==nil) {
-        _imageView.image = _ptpObject.thumbnail; // preview
-        _imageView.alpha = 0.5;
-    }
-    [self appendLog:_ptpObject.objectInfo.description];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    _textView.text = nil;
-    _imageView.image = nil;
-    _ptpObject = nil;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -132,5 +208,35 @@
     _imageView.image = nil;
     _ptpObject = nil;
 }
+
+#pragma make - operation
+
+- (void)startGLK
+{
+    glkViewController = [[GlkViewController alloc] init:_imageView.frame image:_imageData width:imageWidth height:imageHeight yaw:_yaw roll:_roll pitch:_pitch];
+    glkViewController.view.frame = _imageView.frame;
+ 
+    
+    NSLog(@"startGLK imageData: %@", [[NSString alloc] initWithData:_imageData encoding:NSUTF8StringEncoding]);
+    NSLog(@"startGLK: frame %f %f %f %f", _imageView.frame.origin.x, _imageView.frame.origin.y, _imageView.frame.size.width, _imageView.frame.size.height);
+    
+    [self.view addSubview:glkViewController.view];
+    
+    UIButton *myButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    myButton.frame = _closeButton.frame;
+    [myButton setTitle:_closeButton.currentTitle forState:UIControlStateNormal];
+    [myButton addTarget:self action:@selector(myCloseClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [glkViewController.view addSubview:myButton];
+
+    UIButton *myConfigButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    myConfigButton.frame = _configButton.frame;
+    [myConfigButton setTitle:_configButton.currentTitle forState:UIControlStateNormal];
+    [myConfigButton addTarget:self action:@selector(myConfig:) forControlEvents:UIControlEventTouchUpInside];
+    [glkViewController.view addSubview:myConfigButton];
+    
+    [self addChildViewController:glkViewController];
+    [glkViewController didMoveToParentViewController:self];
+}
+
 
 @end

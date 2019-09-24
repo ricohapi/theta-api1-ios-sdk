@@ -9,6 +9,11 @@
 @synthesize objectInfo = _objectInfo;
 @synthesize thumbnail = _thumbnail;
 
+/**
+ * Function for data creation
+ * @param objectInfo PtpIpObjectInfo Object abstraction class at PTP communication
+ * @param thumbnail Thumbnail object
+ */
 - (id)initWithObjectInfo:(PtpIpObjectInfo*)objectInfo thumbnail:(UIImage*)thumbnail
 {
     self = [super init];
